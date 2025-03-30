@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import {io} from "socket.io-client"
-import './App.css'
-
+import { BrowserRouter , Route , Routes } from "react-router-dom"
+import Home from "./Pages/Home"
+import Park from "./Pages/Park"
 function App() {
   // let server = io("http://localhost:8080")
 
@@ -11,7 +9,13 @@ function App() {
 
   return (
     <>
-    
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/park" element={<Park/>} />
+
+    </Routes>
+    </BrowserRouter>
     </>
   )
 }
