@@ -1,14 +1,35 @@
 import { ParkingSchema ,ClientSchema} from "../models/newparking.js";
 import { ApiError, AsyncHanlder } from "../utils/Handler.js";
-
+import { cloudinary } from "./Cloudinary.js";
+import fs from "fs"
 const newParking = AsyncHanlder(async(req,res)=>{
-    const {parkingNumber,username,carnumber,userphone,carpicture,enteredtime ,date} = req.body;
-    if ([parkingNumber, username, carnumber, userphone, carpicture].some(item => !item)) {
-        throw new ApiError("All fields required");
+    // let {carpicture} = req.body;
+    // console.log(carpicture)
+    const {parkingNumber,username,carnumber,userphone,enteredtime  ,date} = req.body;
+    // let carpicture = req.files
+
+    if ([parkingNumber, username, carnumber, userphone, date ].some(item => item == "undefined" || item == "" || item == null)) {
+        return res.send("All fileds required")
     }
+    // console.log()
+    const freespace = await ParkingSchema.findOne({parkingnumber:parkingNumber})
+
+    if(freespace){
+        console.log("occupied")
+       return res.send("Space occupied")
+    }
+    let carpicture;
+    if(req.files){
+      carpicture = (await cloudinary.uploader.upload(req.files[0].path)).secure_url
+      fs.unlinkSync(req.files[0].path)
+    }
+    else{
+        throw new ApiError("Car picture needed");
+        
+    }
+
     
 
-    const freespace = await ParkingSchema.findOne({parkingnumber:parkingNumber})
 
     if(!freespace){
         const newpark = new ParkingSchema({
@@ -37,7 +58,7 @@ const newParking = AsyncHanlder(async(req,res)=>{
 
        return res.send(newpark)
     }
-    return res.send("Space occupied")
+   
 
 })
 
@@ -46,28 +67,35 @@ const exitparking = AsyncHanlder(async(req,res)=>{
     const {parkingNumber , username , carnumber , userphone , exittime , date} = req.body;
 
     if ([parkingNumber, username, carnumber, userphone, exittime].some(item => !item)) {
-        throw new ApiError("All fields required");
+        return res.status(201).send("All fields required");
     }
     const user = await ParkingSchema.findOne({parkingnumber:parkingNumber})
     
     if(!user){
-        throw new ApiError("No car found")
+        return res.status(201).send("No car found")
     }
 
     if(username !== user.username){
-        throw new ApiError("Username incorrect")
+        return res.status(201).send("Username incorrect")
     }
     if(carnumber !== user.carnumber){
-        throw new ApiError("Carnumber incorrect")
+        return res.status(201).send("Carnumber incorrect")
     }
     console.log(user.userphone)
     if(Number(userphone) !== user.userphone){
-        throw new ApiError("Phone number incorrect")
+        return res.status(201).send("Phone number incorrect")
     }
     const clientUpdate = await ClientSchema.findOneAndUpdate(
-        {$and:[{date},{userphone}]},
-        {$set: {exittime:exittime}},
-        {new:true}
+        { $and: [{ date }, { userphone }] }, 
+        {
+            $set: {
+                exittime: exittime,
+                exitdate: Intl.DateTimeFormat('en-IN', {
+                    dateStyle: 'full',
+                }).format(new Date()),
+            },
+        }, 
+        { new: true }
     )
 
     const dltuser = await ParkingSchema.findOne({parkingnumber:parkingNumber}).deleteOne()
@@ -78,7 +106,7 @@ const exitparking = AsyncHanlder(async(req,res)=>{
 
     console.log(clientUpdate)
 
-    res.send("Thank you for visiting")
+   return res.send("Thank you for visiting")
 })
 
 export{newParking, exitparking}

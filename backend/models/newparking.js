@@ -57,6 +57,10 @@ const Clients = new Schema({
     },
     exittime:{
         type:String
+    },
+    exitdate:{
+        type:String,
+        default:"Not yet"
     }
 })
 

@@ -1,13 +1,16 @@
 import express from "express"
 import {Server} from "socket.io"
 import http from "http"
-import multer from "multer"
+import { upload } from "../controllers/Cloudinary.js";
+import cors from "cors"
 const app = express();
-const upload = multer();
-
 app.use(express.json())
-app.use(upload.any())
 const server = http.createServer(app)
+
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 
 const io = new Server(server,{
     cors:{

@@ -4,7 +4,7 @@ import axios from "axios"
 import { useLocation } from 'react-router-dom';
 import {toast , ToastContainer} from "react-toastify"
 import { useNavigate } from 'react-router-dom';
-function Park() {
+function Exit() {
     const [parkingNumber, setparkingNumber] = useState();
     const [username, setusername] = useState();
     const[carnumber,setcarnumber] = useState()
@@ -25,47 +25,31 @@ function Park() {
     setenteredtime(Intl.DateTimeFormat('en-IN',{ minute:'2-digit', hour:'2-digit' }).format(new Date()))
     },[date])
     const handlesubmit = ()=>{
-      if(!carpicture){
-        toast.error("All fields required")
-      }
-      let file = new FormData()
-      file.append("file", carpicture[0]); // Append the file
-      file.append("parkingNumber", number); // Append other fields
-      file.append("username", username);
-      file.append("carnumber", carnumber);
-      file.append("userphone", userphone);
-      file.append("enteredtime", enteredtime);
-      file.append("date", date);
-     
-     console.log(file)
-     axios.defaults.withCredentials=true
-        axios.post("http://localhost:8080/newparking",file,{
-          headers:{
-            "Content-Type":"multipart/form-data"
-          }} ).then((res)=>{
-            console.log(res.data)
-          if(res.data == 'Space occupied'){
-            toast.error("Space occupied",{autoClose:2000})
-          }else{
-          navigate('/ticket',{state:{username,carnumber,userphone ,date , enteredtime, number}})
-          }
-        })
-      
+        console.log("jj")
+     axios.post("http://localhost:8080/exitparking",{ parkingNumber:number,username:username,userphone:userphone,carnumber:carnumber , date:date , exittime:enteredtime})
+     .then(res=>{
+        if(res.status == 201){
+            toast.error(res.data)
+        }
+        if(res.data == "Thank you for visiting"){
+            toast.success("Thank you for visiting")
+        }
+        console.log(res)})
     }
   return (
-    <div className='w-[100%] h-screen flex justify-center items-center py-56 bg-gradient-to-r from-teal-400 to-yellow-200' >
+    <div className='w-[100%] h-screen flex justify-center items-center py-56 bg-gradient-to-r from-teal-500 via-green-300 to-orange-200' >
       <ToastContainer/>
-
-      <div className='p-34 border shadow-2xl rounded-2xl' >
-      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly  gap-y-10  "  >
+      <div className='border p-34 rounded-2xl shadow-2xl'>
+      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly gap-10 "  >
         {/* <label htmlFor="number" className='text-5xl w-fit  h-fit'>parkingNumber</label> */}
         <input type='number' id='number' className='border outline-0  rounded-full h-14  w-96 pl-5  focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out text-center' value={number} placeholder="Enter the parking number" onChange={e=>setparkingNumber(e.target.value)}/>
         <input type="text" className="border  outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out" placeholder="Enter the username" onChange={e=>setusername(e.target.value)}/>
         <input type="text"className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out '  placeholder="Enter carnumber" onChange={e=>setcarnumber(e.target.value)}/>
+        
         <input type="text"className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out' placeholder="Enter phone number" onChange={e=>setuserphone(e.target.value)}/>
-        <input type="file"className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out' onChange={e=>setcarpicture(e.target.files)} />
+       <p>Enter the date that when you parked</p>
         <input type="date" className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out' onChange={(e)=>{setdate(e.target.value)}}/>
-      <button className='border px-5 py-2 hover:bg-white transition-all rounded-md' onClick={handlesubmit} >Submit</button>
+      <button className='border px-5 py-3 hover:bg-white rounded-md transition-all' onClick={handlesubmit} >Submit</button>
       </div>
       </div>
       
@@ -74,4 +58,4 @@ function Park() {
   )
 }
 
-export default Park
+export default Exit
