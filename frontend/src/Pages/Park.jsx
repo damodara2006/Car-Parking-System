@@ -14,6 +14,7 @@ function Park() {
     const [date,setdate] = useState()
     const location = useLocation()
     let number = location.state.value;
+    let occupied = location.state.occupied;
     const navigate = useNavigate()
 
     
@@ -25,6 +26,7 @@ function Park() {
     setenteredtime(Intl.DateTimeFormat('en-IN',{ minute:'2-digit', hour:'2-digit' }).format(new Date()))
     },[date])
     const handlesubmit = ()=>{
+      console.log(carpicture)
       if(!carpicture){
         toast.error("All fields required")
       }
@@ -53,11 +55,15 @@ function Park() {
       
     }
   return (
-    <div className='w-[100%] h-screen flex justify-center items-center py-56 bg-gradient-to-r from-teal-400 to-yellow-200' >
+    <div className='w-[100%] h-screen flex justify-center items-center py-56 bg-gradient-to-r from-teal-400 to-yellow-200 z-0' >
       <ToastContainer/>
+      {
+        occupied? 
+      <p className=' text-[2400%]  text-red-400 z-20 ' >OCUUPIED</p> : ""
 
-      <div className='p-34 border shadow-2xl rounded-2xl' >
-      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly  gap-y-10  "  >
+      }
+      <div className='p-34 border shadow-2xl rounded-2xl  absolute z-100 bg-gradient-to-r to-teal-400 from-yellow-200' >
+      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly  gap-y-10 z-30 blur-none"  >
         {/* <label htmlFor="number" className='text-5xl w-fit  h-fit'>parkingNumber</label> */}
         <input type='number' id='number' className='border outline-0  rounded-full h-14  w-96 pl-5  focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out text-center' value={number} placeholder="Enter the parking number" onChange={e=>setparkingNumber(e.target.value)}/>
         <input type="text" className="border  outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out" placeholder="Enter the username" onChange={e=>setusername(e.target.value)}/>

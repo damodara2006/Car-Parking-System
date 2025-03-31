@@ -39,7 +39,7 @@ function Exit() {
   return (
     <div className='w-[100%] h-screen flex justify-center items-center py-56 bg-gradient-to-r from-teal-500 via-green-300 to-orange-200' >
       <ToastContainer/>
-      <div className='border p-34 rounded-2xl shadow-2xl'>
+      <div className='border p-34 rounded-2xl shadow-2xl bg-gradient-to-r to-teal-500 via-green-300 from-orange-200'>
       <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly gap-10 "  >
         {/* <label htmlFor="number" className='text-5xl w-fit  h-fit'>parkingNumber</label> */}
         <input type='number' id='number' className='border outline-0  rounded-full h-14  w-96 pl-5  focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out text-center' value={number} placeholder="Enter the parking number" onChange={e=>setparkingNumber(e.target.value)}/>
