@@ -19,7 +19,7 @@ function Home() {
       <div className='flex flex-row flex-wrap w-[50%] gap-5 h-[70%] justify-center items-center'>
         {[...Array(16)].map((_, index) => {
           const parkedCar = data.find(car => car.parkingnumber === index + 1);
-          // console.log(parkedCar)
+          console.log(parkedCar)
           return (
             <div key={index} 
               className='border w-[20%] h-[20%] hover:scale-[115%] rounded-2xl active:scale-105 transition-all duration-100 overflow-hidden flex justify-center items-center' 
@@ -27,7 +27,7 @@ function Home() {
               {parkedCar ? (
                 <img src={parkedCar.carpicture} alt='Car' className='w-full h-full object-cover' onClick={()=>setoccupied(true)} />
               ) : (
-                <p className='bg-gradient-to-r from-green-300 to-green-600 w-full h-full flex justify-center items-center'>Available</p>
+                <p className='bg-gradient-to-r from-green-400 to-green-700 w-full h-full flex hover:bg-gradient-to-r hover:from-green-100 hover:to-green-400 justify-center items-center transition-all duration-1000'>Available</p>
               )}
             </div>
           );
