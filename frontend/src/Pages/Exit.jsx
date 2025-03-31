@@ -26,7 +26,7 @@ function Exit() {
     },[date])
     const handlesubmit = ()=>{
         console.log("jj")
-     axios.post("http://localhost:8080/exitparking",{ parkingNumber:number,username:username,userphone:userphone,carnumber:carnumber , date:date , exittime:enteredtime})
+     axios.post("https://car-parking-system-backend.onrender.com/exitparking",{ parkingNumber:number,username:username,userphone:userphone,carnumber:carnumber , date:date , exittime:enteredtime})
      .then(res=>{
         if(res.status == 201){
             toast.error(res.data)

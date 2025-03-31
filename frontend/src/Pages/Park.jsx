@@ -41,7 +41,7 @@ function Park() {
      
      console.log(file)
      axios.defaults.withCredentials=true
-        axios.post("http://localhost:8080/newparking",file,{
+        axios.post("https://car-parking-system-backend.onrender.com/newparking",file,{
           headers:{
             "Content-Type":"multipart/form-data"
           }} ).then((res)=>{

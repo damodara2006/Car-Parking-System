@@ -8,7 +8,7 @@ function Home() {
   const [data, setData] = useState([]);
   const [occupied,setoccupied] = useState(false)
   useEffect(() => {
-    axios.get("http://localhost:8080/getparkedcars")
+    axios.get("https://car-parking-system-backend.onrender.com/getparkedcars")
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }, []);
