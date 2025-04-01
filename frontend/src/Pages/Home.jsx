@@ -14,10 +14,10 @@ function Home() {
   }, []);
 
   return (
-    <div className='w-screen h-screen bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500 flex items-center justify-center'>
+    <div className='w-screen h-max pt-32 pb-30 bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500 flex items-center justify-center'>
       <h1 className='top-10 absolute text-red-500 text-3xl'>Selected: <span className='text-black' >{value}</span></h1>
 
-      <div className=' w-full flex justify-center items-center flex-col px-10 relative bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500'>
+      <div className=' w-full h-[100%] flex justify-center items-center flex-col px-10 relative bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500'>
       <div className='flex flex-row flex-wrap w-[50%] gap-5 h-[100%] justify-center items-center'>
         {[...Array(16)].map((_, index) => {
           const parkedCar = data.find(car => car.parkingnumber === index + 1);
@@ -35,7 +35,7 @@ function Home() {
           );
         })}
       </div>
-      <div className='gap-10 flex'>
+      <div className='gap-10 flex '>
         <button className='border px-18 py-4 mt-4 hover:bg-gray-400 transition-all duration-300 rounded-xl bg-white' onClick={() => navigate('/park', { state: { value , occupied} })}>BOOK</button>
         <button className='border px-18 py-4 mt-4 hover:bg-gray-400 transition-all duration-300 rounded-xl bg-white' onClick={() => navigate('/exit', { state: { value } })}>EXIT</button>
       </div>
