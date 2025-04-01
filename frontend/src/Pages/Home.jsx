@@ -8,21 +8,23 @@ function Home() {
   const [data, setData] = useState([]);
   const [occupied,setoccupied] = useState(false)
   useEffect(() => {
-    axios.get("https://car-parking-system-backend.onrender.com/getparkedcars")
+    axios.get(["https://car-parking-system-backend.onrender.com/getparkedcars",])
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }, []);
-  
+
   return (
-    <div className='w-screen h-screen flex justify-center items-center flex-col relative bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500'>
+    <div className='w-screen h-screen bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500 flex items-center justify-center'>
       <h1 className='top-10 absolute text-red-500 text-3xl'>Selected: <span className='text-black' >{value}</span></h1>
-      <div className='flex flex-row flex-wrap w-[50%] gap-5 h-[70%] justify-center items-center'>
+
+      <div className=' w-full flex justify-center items-center flex-col px-10 relative bg-gradient-to-r from-gray-400 via-cyan-400 to-gray-500'>
+      <div className='flex flex-row flex-wrap w-[50%] gap-5 h-[100%] justify-center items-center'>
         {[...Array(16)].map((_, index) => {
           const parkedCar = data.find(car => car.parkingnumber === index + 1);
           console.log(parkedCar)
           return (
             <div key={index} 
-              className='border w-[20%] h-[20%] hover:scale-[115%] rounded-2xl active:scale-105 transition-all duration-100 overflow-hidden flex justify-center items-center' 
+              className='border w-44 h-44 hover:scale-[115%] rounded-2xl active:scale-105 transition-all duration-100 overflow-hidden flex justify-center items-center' 
               onClick={() => setValue(index + 1)}>
               {parkedCar ? (
                 <img src={parkedCar.carpicture} alt='Car' className='w-full h-full object-cover' onClick={()=>setoccupied(true)} />
@@ -37,6 +39,7 @@ function Home() {
         <button className='border px-18 py-4 mt-4 hover:bg-gray-400 transition-all duration-300 rounded-xl bg-white' onClick={() => navigate('/park', { state: { value , occupied} })}>BOOK</button>
         <button className='border px-18 py-4 mt-4 hover:bg-gray-400 transition-all duration-300 rounded-xl bg-white' onClick={() => navigate('/exit', { state: { value } })}>EXIT</button>
       </div>
+    </div>
     </div>
   );
 }

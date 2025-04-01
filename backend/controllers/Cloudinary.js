@@ -17,17 +17,10 @@ const storage = multer.diskStorage({
   
   const upload = multer({ storage: storage })
 
-
 cloudinary.config({ 
     cloud_name: 'dmbiqpg0z', 
     api_key: '777934722256838', 
     api_secret: `${process.env.Cloudinary_API}`
-}); 
-
-// const imageupload = AsyncHanlder(async(req,res)=>{
-//     const file = req.files
-//   const image = (await cloudinary.uploader.upload(file[0].path)).secure_url
-//   res.send
-// })
+});
 
 export {cloudinary ,upload }
