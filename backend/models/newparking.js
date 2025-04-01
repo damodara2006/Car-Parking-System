@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import mongoose from "mongoose";
+
 const newparking = new Schema({
     parkingnumber:{
         type:Number,

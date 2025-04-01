@@ -3,11 +3,9 @@ import { ApiError, AsyncHanlder } from "../utils/Handler.js"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 
-
 dotenv.config({
     path:'.env'
 })
-
 
 const MONGODB = async()=>{
     try {
@@ -18,6 +16,5 @@ const MONGODB = async()=>{
         process.exit(1)
     }
 }
-
 
 export default MONGODB

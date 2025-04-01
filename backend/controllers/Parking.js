@@ -3,11 +3,7 @@ import { ApiError, AsyncHanlder } from "../utils/Handler.js";
 import { cloudinary } from "./Cloudinary.js";
 import fs from "fs"
 const newParking = AsyncHanlder(async(req,res)=>{
-    // let {carpicture} = req.body;
-    // console.log(carpicture)
-    const {parkingNumber,username,carnumber,userphone,enteredtime  ,date} = req.body;
-    // let carpicture = req.files
-
+    const {parkingNumber,username,carnumber,userphone,enteredtime  ,date} = req.body
     if ([parkingNumber, username, carnumber, userphone, date ].some(item => item == "undefined" || item == "" || item == null)) {
         return res.send("All fileds required")
     }
@@ -27,9 +23,6 @@ const newParking = AsyncHanlder(async(req,res)=>{
         throw new ApiError("Car picture needed");
         
     }
-
-    
-
 
     if(!freespace){
         const newpark = new ParkingSchema({

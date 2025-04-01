@@ -17,11 +17,6 @@ function Park() {
     let occupied = location.state.occupied;
     const navigate = useNavigate()
 
-    
-    // setparkingNumber(number)
-  
-    // const[para,setpara] = useState(false)
-
     useEffect(()=>{
     setenteredtime(Intl.DateTimeFormat('en-IN',{ minute:'2-digit', hour:'2-digit' }).format(new Date()))
     },[date])
@@ -31,8 +26,8 @@ function Park() {
         toast.error("All fields required")
       }
       let file = new FormData()
-      file.append("file", carpicture[0]); // Append the file
-      file.append("parkingNumber", number); // Append other fields
+      file.append("file", carpicture[0]); 
+      file.append("parkingNumber", number); 
       file.append("username", username);
       file.append("carnumber", carnumber);
       file.append("userphone", userphone);
