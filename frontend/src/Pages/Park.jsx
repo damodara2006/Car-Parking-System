@@ -16,6 +16,8 @@ function Park() {
     let number = location.state.value;
     let occupied = location.state.occupied;
     const navigate = useNavigate()
+    const URL = "http://localhost:8080"
+
 
     useEffect(()=>{
     setenteredtime(Intl.DateTimeFormat('en-IN',{ minute:'2-digit', hour:'2-digit' }).format(new Date()))
@@ -36,7 +38,7 @@ function Park() {
      
      console.log(file)
      axios.defaults.withCredentials=true
-        axios.post("https://car-parking-system-backend.onrender.com/newparking",file,{
+        axios.post(`${URL}/newparking`,file,{
           headers:{
             "Content-Type":"multipart/form-data"
           }} ).then((res)=>{
@@ -54,13 +56,13 @@ function Park() {
       <ToastContainer/>
       {
         occupied? 
-      <p className=' text-[2400%]  text-red-400 z-20 ' >OCUUPIED</p> : ""
+      <p className=' text-[2400%]  text-red-400 absolute z-50' >OCUUPIED</p> : ""
 
       }
-      <div className='w-full h-full flex justify-center items-center'>
-      <div className='  w-[70%] h-[75%] shadow-2xl  flex-wrap rounded-2xl  absolute z-100 bg-gradient-to-r to-teal-400 from-yellow-200' >
-      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly  gap-y-10 z-30 blur-none px-[0%] py-[5%]"  >
-        {/* <label htmlFor="number" className='text-5xl w-fit  h-fit'>parkingNumber</label> */}
+      <div className='w-full h-full flex justify-center items-center border-b-orange-600 z-40'>
+      <div className='  w-[70%] h-[75%] shadow-2xl  flex-wrap rounded-2xl  absolute z-100 bg-gradient-to-r to-teal-400 from-yellow-200 left-[15%] ' >
+      <div className="flex flex-col h-[100%] font-roboto items-center  justify-evenly  gap-y-10 z-30 blur-none px-[0%] py-[5%] "  >
+        {/* <label htmlFor="number" className='text-5xl w-fit  h-fit'>parkingNumber</label>  */}
         <input type='number' id='number' className='border outline-0  rounded-full h-[7%]  w-[63%]  text-[75%] focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out text-center' value={number} placeholder="Enter the parking number" onChange={e=>setparkingNumber(e.target.value)}/>
         <input type="text" className="border  outline-0 rounded-full h-[8%]  w-[63%] pl-[5%]  text-[75%] placeholder:text-[100%]  focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out" placeholder="Enter the username" onChange={e=>setusername(e.target.value)}/>
         <input type="text"className='border outline-0 rounded-full h-[8%]  w-[63%] pl-[5%]  text-[75%] placeholder:text-[100%] focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out '  placeholder="Enter carnumber" onChange={e=>setcarnumber(e.target.value)}/>

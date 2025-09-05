@@ -14,6 +14,8 @@ function Exit() {
     const [date,setdate] = useState()
     const location = useLocation()
     let number = location.state.value;
+    const URL = "http://localhost:8080"
+
     const navigate = useNavigate()
 
     
@@ -25,8 +27,7 @@ function Exit() {
     setenteredtime(Intl.DateTimeFormat('en-IN',{ minute:'2-digit', hour:'2-digit' }).format(new Date()))
     },[date])
     const handlesubmit = ()=>{
-        console.log("jj")
-     axios.post("https://car-parking-system-backend.onrender.com/exitparking",{ parkingNumber:number,username:username,userphone:userphone,carnumber:carnumber , date:date , exittime:enteredtime})
+     axios.post(`${URL}/exitparking`,{ parkingNumber:number,username:username,userphone:userphone,carnumber:carnumber , date:date , exittime:enteredtime})
      .then(res=>{
         if(res.status == 201){
             toast.error(res.data)
@@ -49,6 +50,8 @@ function Exit() {
         <input type="text"className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out' placeholder="Enter phone number" onChange={e=>setuserphone(e.target.value)}/>
        <p>Enter the date that when you parked</p>
         <input type="date" className='border outline-0 rounded-full h-14  w-96 pl-5 focus:bg-gradient-to-r from-orange-200 focus:transition-all focus:duration-300 ease-in-out' onChange={(e)=>{setdate(e.target.value)}}/>
+        <p>Fees: {
+          Math.floor(Math.random() * (400 - 200)) + 300  } </p>
       <button className='border px-5 py-3 hover:bg-white rounded-md transition-all' onClick={handlesubmit} >Submit</button>
       </div>
       </div>

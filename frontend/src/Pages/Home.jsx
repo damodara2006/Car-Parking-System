@@ -7,8 +7,9 @@ function Home() {
   const [value, setValue] = useState(1);
   const [data, setData] = useState([]);
   const [occupied,setoccupied] = useState(false)
+  const URL = "http://localhost:8080"
   useEffect(() => {
-    axios.get(["https://car-parking-system-backend.onrender.com/getparkedcars",])
+    axios.get([`${URL}/getparkedcars`,])
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }, []);
